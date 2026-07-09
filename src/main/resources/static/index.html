@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zomato Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main>
+        <section class="login-screen" id="authScreen">
+            <div class="brand-panel">
+                <p class="eyebrow">Practice full-stack food app</p>
+                <h1>Zomato Demo</h1>
+                <p>Login ke baad ek restaurant, 12 foods, cart, address, order aur mock payment flow dikhega.</p>
+            </div>
+
+            <div class="auth-panel">
+                <div class="tabs">
+                    <button class="tab active" id="loginTab" type="button">Login</button>
+                    <button class="tab" id="registerTab" type="button">Register</button>
+                </div>
+
+                <form id="loginForm" class="auth-form">
+                    <h2>Login</h2>
+                    <label>Email <input type="email" id="loginEmail" value="demo@zomato.com" required></label>
+                    <label>Password <input type="password" id="loginPassword" value="demo123" required></label>
+                    <button class="primary-btn" type="submit">Login</button>
+                    <p class="hint">Admin: admin@zomato.com / admin123</p>
+                </form>
+
+                <form id="registerForm" class="auth-form hidden">
+                    <h2>Register</h2>
+                    <label>Name <input type="text" id="registerName" required></label>
+                    <label>Email <input type="email" id="registerEmail" required></label>
+                    <label>Password <input type="password" id="registerPassword" required></label>
+                    <label>Mobile <input type="tel" id="registerMobile" required></label>
+                    <label>Address <textarea id="registerAddress" rows="3" required></textarea></label>
+                    <button class="primary-btn" type="submit">Create account</button>
+                </form>
+
+                <p class="message" id="authMessage"></p>
+            </div>
+        </section>
+
+        <section class="app-screen hidden" id="appScreen">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">Logged in food ordering flow</p>
+                    <h1>Zomato Demo</h1>
+                </div>
+                <div class="header-actions">
+                    <span class="status" id="loginStatus">Customer</span>
+                    <button class="ghost-btn" id="logoutBtn" type="button">Logout</button>
+                </div>
+            </header>
+
+            <section class="restaurant-hero" id="restaurantHero"></section>
+
+            <section class="toolbar">
+                <input id="searchInput" type="search" placeholder="Search food inside restaurant">
+                <select id="sortSelect">
+                    <option value="name">Sort by name</option>
+                    <option value="price">Sort by price</option>
+                </select>
+                <button class="ghost-btn" id="searchBtn" type="button">Search</button>
+            </section>
+
+            <section class="layout">
+                <div>
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Spice Hub Kitchen</p>
+                            <h2>Available foods</h2>
+                        </div>
+                    </div>
+                    <div class="food-grid" id="foodGrid"></div>
+                </div>
+
+                <aside class="side-panel">
+                    <h2>Cart & Order</h2>
+                    <div id="cartItems" class="cart-items"></div>
+                    <div class="cart-total">
+                        <span>Total</span>
+                        <strong id="cartTotal">Rs 0</strong>
+                    </div>
+
+                    <form id="addressForm" class="compact-form">
+                        <h3>Delivery address</h3>
+                        <input id="addressLabel" value="Home" placeholder="Label" required>
+                        <input id="addressLine" value="MG Road, Pune" placeholder="Address line" required>
+                        <input id="addressCity" value="Pune" placeholder="City" required>
+                        <input id="addressPincode" value="411001" placeholder="Pincode" required>
+                        <button class="ghost-btn" type="submit">Save Address</button>
+                    </form>
+
+                    <button class="primary-btn" id="placeOrder" type="button">Place Order</button>
+                    <button class="primary-btn" id="payOrder" type="button" disabled>Mock Pay</button>
+                    <p class="message" id="orderMessage"></p>
+                </aside>
+            </section>
+
+            <section class="bottom-grid">
+                <div class="plain-section">
+                    <h2>Orders</h2>
+                    <div id="ordersList"></div>
+                </div>
+                <div class="plain-section">
+                    <h2>Reviews</h2>
+                    <form id="reviewForm" class="review-form">
+                        <select id="ratingInput">
+                            <option value="5">5 stars</option>
+                            <option value="4">4 stars</option>
+                            <option value="3">3 stars</option>
+                        </select>
+                        <input id="reviewComment" placeholder="Write review" required>
+                        <button class="ghost-btn" type="submit">Add Review</button>
+                    </form>
+                    <div id="reviewsList"></div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
