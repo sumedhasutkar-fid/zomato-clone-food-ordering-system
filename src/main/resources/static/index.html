@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zomato Demo</title>
+    <title>Zomato Demo Clone</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,8 +11,8 @@
         <section class="login-screen" id="authScreen">
             <div class="brand-panel">
                 <p class="eyebrow">Practice full-stack food app</p>
-                <h1>Zomato Demo</h1>
-                <p>Login ke baad ek restaurant, 12 foods, cart, address, order aur mock payment flow dikhega.</p>
+                <h1>Zomato Demo Clone</h1>
+                <p>After logging in, you will see a restaurant, 12 food items, a cart, delivery address, order details, and a mock payment flow..</p>
             </div>
 
             <div class="auth-panel">
@@ -26,7 +26,7 @@
                     <label>Email <input type="email" id="loginEmail" value="demo@zomato.com" required></label>
                     <label>Password <input type="password" id="loginPassword" value="demo123" required></label>
                     <button class="primary-btn" type="submit">Login</button>
-                    <p class="hint">Admin: admin@zomato.com / admin123</p>
+                    <!--<p class="hint">Admin: admin@zomato.com / admin123</p>-->
                 </form>
 
                 <form id="registerForm" class="auth-form hidden">
@@ -47,7 +47,7 @@
             <header class="topbar">
                 <div>
                     <p class="eyebrow">Logged in food ordering flow</p>
-                    <h1>Zomato Demo</h1>
+                    <h1>Zomato Demo Clone</h1>
                 </div>
                 <div class="header-actions">
                     <span class="status" id="loginStatus">Customer</span>
@@ -56,6 +56,8 @@
             </header>
 
             <section class="restaurant-hero" id="restaurantHero"></section>
+
+            <section class="restaurant-list" id="restaurantList"></section>
 
             <section class="toolbar">
                 <input id="searchInput" type="search" placeholder="Search food inside restaurant">
@@ -74,6 +76,7 @@
                             <h2>Available foods</h2>
                         </div>
                     </div>
+                    <div class="suggestions" id="suggestionsList"></div>
                     <div class="food-grid" id="foodGrid"></div>
                 </div>
 
@@ -84,6 +87,12 @@
                         <span>Total</span>
                         <strong id="cartTotal">Rs 0</strong>
                     </div>
+                    <div class="coupon-row">
+                        <input id="couponCode" value="WELCOME20" placeholder="Coupon code">
+                        <button class="ghost-btn" id="applyCoupon" type="button">Apply</button>
+                    </div>
+                    <p class="message" id="couponMessage"></p>
+                    <p class="wallet-line" id="walletBalance">Wallet: Rs 0</p>
 
                     <form id="addressForm" class="compact-form">
                         <h3>Delivery address</h3>
@@ -96,7 +105,10 @@
 
                     <button class="primary-btn" id="placeOrder" type="button">Place Order</button>
                     <button class="primary-btn" id="payOrder" type="button" disabled>Mock Pay</button>
+                    <button class="primary-btn" id="walletPayOrder" type="button" disabled>Wallet Pay</button>
+                    <button class="ghost-btn" id="trackOrder" type="button" disabled>Track Order</button>
                     <p class="message" id="orderMessage"></p>
+                    <div class="tracking-box" id="trackingBox"></div>
                 </aside>
             </section>
 
@@ -104,6 +116,8 @@
                 <div class="plain-section">
                     <h2>Orders</h2>
                     <div id="ordersList"></div>
+                    <h2>Notifications</h2>
+                    <div id="notificationsList"></div>
                 </div>
                 <div class="plain-section">
                     <h2>Reviews</h2>
@@ -117,6 +131,10 @@
                         <button class="ghost-btn" type="submit">Add Review</button>
                     </form>
                     <div id="reviewsList"></div>
+                    <h2>Wishlist</h2>
+                    <div id="favoritesList"></div>
+                    <h2>Recommendations</h2>
+                    <div id="recommendationsList"></div>
                 </div>
             </section>
         </section>

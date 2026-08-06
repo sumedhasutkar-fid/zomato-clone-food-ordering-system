@@ -161,8 +161,39 @@ select {
 
 .toolbar,
 .layout,
-.bottom-grid {
+.bottom-grid,
+.restaurant-list {
     padding: 20px clamp(18px, 4vw, 48px);
+}
+
+.restaurant-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 14px;
+    padding-bottom: 0;
+}
+
+.restaurant-pill,
+.suggestions button,
+.qty-row button,
+.wish-btn {
+    min-height: 36px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.restaurant-pill {
+    padding: 0 14px;
+}
+
+.active-pill {
+    color: white;
+    border-color: var(--brand);
+    background: var(--brand);
 }
 
 .toolbar {
@@ -205,6 +236,40 @@ select {
     padding: 14px;
 }
 
+.qty-row {
+    display: grid;
+    grid-template-columns: 40px 36px 40px 1fr;
+    align-items: center;
+    gap: 8px;
+}
+
+.qty-row strong {
+    text-align: center;
+}
+
+.qty-row button:not(.wish-btn) {
+    color: white;
+    border-color: var(--brand);
+    background: var(--brand);
+}
+
+.wish-btn {
+    color: var(--brand);
+    background: #fff1f2;
+}
+
+.suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.suggestions button {
+    padding: 0 12px;
+    color: var(--muted);
+}
+
 .food-title-row,
 .cart-total {
     display: flex;
@@ -242,6 +307,28 @@ select {
 .hint {
     color: var(--muted);
     font-size: 13px;
+}
+
+.coupon-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+}
+
+.wallet-line,
+.tracking-box p {
+    margin: 0;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.tracking-box {
+    display: grid;
+    gap: 6px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #f8fafc;
 }
 
 .bottom-grid {

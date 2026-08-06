@@ -37,4 +37,9 @@ public class CartController {
     public void clearCart() {
         service.clearCart(authUtil.currentUserEmail());
     }
+
+    @DeleteMapping("/{foodId}")
+    public void decreaseFromCart(@PathVariable Long foodId) {
+        service.decreaseFromCart(authUtil.currentUserEmail(), foodId);
+    }
 }

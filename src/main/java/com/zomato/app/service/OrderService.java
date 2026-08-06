@@ -7,6 +7,7 @@ import com.zomato.app.exception.InvalidRequestException;
 import com.zomato.app.repository.CartItemRepository;
 import com.zomato.app.repository.FoodOrderRepository;
 import com.zomato.app.repository.OrderItemRepository;
+import com.zomato.app.util.OrderStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +19,22 @@ public class OrderService {
     private final CartItemRepository cartItemRepository;
     private final FoodOrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final NotificationService notificationService;
+    private final EventPublisherService eventPublisherService;
+    private final AuditLogService auditLogService;
 
     public OrderService(CartItemRepository cartItemRepository,
                         FoodOrderRepository orderRepository,
-                        OrderItemRepository orderItemRepository) {
+                        OrderItemRepository orderItemRepository,
+                        NotificationService notificationService,
+                        EventPublisherService eventPublisherService,
+                        AuditLogService auditLogService) {
         this.cartItemRepository = cartItemRepository;
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
+        this.notificationService = notificationService;
+        this.eventPublisherService = eventPublisherService;
+        this.auditLogService = auditLogService;
     }
 
     @Transactional
@@ -46,6 +56,9 @@ public class OrderService {
         }
 
         cartItemRepository.deleteByUserEmail(email);
+        notificationService.notify(email, "Order #" + order.getId() + " placed successfully");
+        eventPublisherService.publish("ORDER_PLACED", "Order #" + order.getId() + " placed by " + email);
+        auditLogService.log(email, "ORDER_PLACED", "Order amount " + total);
         return order;
     }
 
@@ -53,10 +66,39 @@ public class OrderService {
         return orderRepository.findByUserEmailOrderByCreatedAtDesc(email);
     }
 
-    public FoodOrder markPaid(Long orderId) {
-        FoodOrder order = orderRepository.findById(orderId)
+    public FoodOrder getOrder(Long orderId) {
+        return orderRepository.findById(orderId)
                 .orElseThrow(() -> new InvalidRequestException("Order not found"));
+    }
+
+    public FoodOrder markPaid(Long orderId) {
+        FoodOrder order = getOrder(orderId);
         order.setPaymentStatus("PAID");
         return orderRepository.save(order);
+    }
+
+    public FoodOrder updateStatus(Long orderId, String status) {
+        if (!List.of(OrderStatus.PLACED, OrderStatus.CONFIRMED, OrderStatus.PREPARING, OrderStatus.READY, OrderStatus.OUT_FOR_DELIVERY, OrderStatus.DELIVERED).contains(status)) {
+            throw new InvalidRequestException("Invalid order status");
+        }
+
+        FoodOrder order = getOrder(orderId);
+        order.setStatus(status);
+        order.setTrackingStatus(toTrackingStatus(status));
+        notificationService.notify(order.getUserEmail(), "Order status changed to " + status);
+        eventPublisherService.publish("ORDER_STATUS_CHANGED", "Order #" + orderId + " -> " + status);
+        auditLogService.log("ADMIN", "ORDER_STATUS_CHANGED", "Order #" + orderId + " -> " + status);
+        return orderRepository.save(order);
+    }
+
+    private String toTrackingStatus(String status) {
+        return switch (status) {
+            case OrderStatus.CONFIRMED -> "Restaurant confirmed your order";
+            case OrderStatus.PREPARING -> "Restaurant is preparing food";
+            case OrderStatus.READY -> "Food is ready for pickup";
+            case OrderStatus.OUT_FOR_DELIVERY -> "Rider picked order and is on the way";
+            case OrderStatus.DELIVERED -> "Delivered";
+            default -> "Order placed";
+        };
     }
 }

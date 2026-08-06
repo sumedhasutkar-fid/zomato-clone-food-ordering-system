@@ -16,6 +16,7 @@ public class Food {
     private Long restaurantId;
     private Long categoryId;
     private boolean available = true;
+    private int stockQuantity = 50;
 
     public Food() {}
 
@@ -43,6 +44,7 @@ public class Food {
     public Long getRestaurantId() { return restaurantId; }
     public Long getCategoryId() { return categoryId; }
     public boolean isAvailable() { return available; }
+    public int getStockQuantity() { return stockQuantity; }
 
     public void setName(String name) { this.name = name; }
     public void setPrice(double price) { this.price = price; }
@@ -51,4 +53,5 @@ public class Food {
     public void setRestaurantId(Long restaurantId) { this.restaurantId = restaurantId; }
     public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
     public void setAvailable(boolean available) { this.available = available; }
+    public void setStockQuantity(int stockQuantity) { this.stockQuantity = stockQuantity; }
 }

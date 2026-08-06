@@ -31,4 +31,14 @@ public class OrderController {
         Long addressId = Long.valueOf(request.get("addressId").toString());
         return service.placeOrder(authUtil.currentUserEmail(), addressId);
     }
+
+    @GetMapping("/{id}")
+    public FoodOrder getOrder(@PathVariable Long id) {
+        return service.getOrder(id);
+    }
+
+    @PutMapping("/{id}/status")
+    public FoodOrder updateStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        return service.updateStatus(id, request.get("status"));
+    }
 }

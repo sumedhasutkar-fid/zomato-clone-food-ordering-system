@@ -27,7 +27,24 @@ public class SwaggerController {
                         "GET/POST /addresses - CUSTOMER",
                         "GET/POST /orders - CUSTOMER",
                         "POST /payments/mock/{orderId}",
-                        "GET/POST /reviews"
+                        "POST /payments/wallet/{orderId}",
+                        "GET/POST /reviews",
+                        "PUT /orders/{id}/status",
+                        "GET /tracking/{orderId}",
+                        "GET/POST /delivery/*",
+                        "GET/POST /coupons",
+                        "GET/POST /wallet",
+                        "GET /notifications",
+                        "GET/POST /favorites",
+                        "GET/POST /inventory",
+                        "GET /search/suggestions",
+                        "GET /search/elastic",
+                        "GET /search/recommendations",
+                        "GET/POST /cache",
+                        "GET /admin/dashboard",
+                        "GET /admin/audit-logs",
+                        "GET/POST /admin/events",
+                        "GET /admin/jobs"
                 )
         );
     }
